@@ -6,9 +6,11 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@ang
 import {MockBackendInterceptor} from "./shared/mock-backend/mock-backend.interceptor";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CountryInputComponent } from './components/country-input/country-input.component';
+import { ForbiddenCountryValidatorDirective } from './shared/directives/country-filter.directive';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CountryInputComponent, ForbiddenCountryValidatorDirective],
   imports: [
     BrowserModule,
     RouterOutlet,
