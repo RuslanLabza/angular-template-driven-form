@@ -1,5 +1,8 @@
 <form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
-  <button type="submit" class="btn btn-primary mb-2">Submit all forms</button>
+  <div class="d-flex">
+    <button type="submit" class="btn btn-primary mb-2" [disabled]="pageForm.invalid && countInvalidControls(pageForm) && (pageForm.touched || this.isSubmittedForm)">Submit all forms</button>
+    <p *ngIf="pageForm.invalid && countInvalidControls(pageForm) && (pageForm.touched || this.isSubmittedForm)" class="invalid-feedback d-block">Invalid forms: {{countInvalidControls(pageForm)}}</p>
+  </div>
   <div formArrayName="cards" class="d-flex flex-wrap gap-1">
     <div
       class="card p-3"
@@ -8,10 +11,12 @@
     >
       <button class="btn btn-default btn-remove" (click)="onRemoveForm(i)">X</button>
       <app-country-input class="mb-2" [index]="i" formControlName="country" appForbiddenCountry></app-country-input>
-      <span *ngIf="isCountryErrorShown(i)" class="invalid-feedback d-block">Please provide a correct Country</span>
+      <span *ngIf="isErrorShown('country', i)" class="invalid-feedback d-block">Please provide a correct Country</span>
       <div class="form-group mb-2">
         <label [for]="'username-' + i">Username</label>
-        <input type="text" class="form-control" formControlName="username" [id]="'username-' + i" placeholder="Username">
+        <input type="text" class="form-control" formControlName="username" [id]="'username-' + i" placeholder="Username" [disabled]="isPendingShown(i)" appIsAvailable>
+        <span *ngIf="isErrorShown('username', i)" class="invalid-feedback d-block">Please provide a correct Username</span>
+        <span *ngIf="isPendingShown(i)" class="valid-feedback d-block">Pending</span>
       </div>
       <div class="form-group">
         <label [for]="'birthday-' + i">Birthday</label>

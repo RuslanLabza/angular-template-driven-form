@@ -15,7 +15,6 @@ export class ForbiddenCountryValidatorDirective implements Validator {
 export function forbiddenCountryValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const forbidden = !Object.values(Country).includes(control.value);
-    console.log(forbidden)
     return forbidden ? {forbiddenCountry: {value: control.value}} : null;
   };
 }

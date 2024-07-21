@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   public get formCardGroups() {
     return (<FormArray>this.pageForm.get('cards')).controls;
   }
-  private isSubmittedForm: boolean = false;
+  public isSubmittedForm: boolean = false;
 
   constructor(private http: HttpClient, private fb: FormBuilder) {
   }
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   private createForm(): FormGroup {
     return this.fb.group({
       country: [null],
-      username: [null],
+      username: [null, {updateOn: 'blur'}],
       birthday: [null],
     })
   }
@@ -46,12 +46,24 @@ export class AppComponent implements OnInit {
     console.log(this.pageForm.controls['cards'])
   }
 
-  public isCountryErrorShown(index: number): boolean | undefined {
-    return !this.formCardGroups[index].get('country')?.valid && (this.formCardGroups[index].get('country')?.touched || this.isSubmittedForm);
+  public isErrorShown(prop: 'country' | 'username', index: number): boolean | undefined {
+    return this.formCardGroups[index].get(prop)?.invalid && (this.formCardGroups[index].get(prop)?.touched || this.isSubmittedForm);
   }
 
-    // just an example, you are free to move it anywhere
-    checkUser(username: string): Observable<CheckUserResponseData> {
-      return this.http.post<CheckUserResponseData>('/api/checkUsername1', {username});
-    }
+  public isPendingShown(index: number): boolean {
+    return Boolean(this.formCardGroups[index].get('username')?.pending) && (this.formCardGroups[index].get('username')?.touched || this.isSubmittedForm);
+  }
+
+  public countInvalidControls(formGroup: FormGroup | FormArray): number {
+    let invalidCount = 0;
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        invalidCount += this.countInvalidControls(control);
+      } else if (control && control.invalid && (control.touched || this.isSubmittedForm)) {
+        invalidCount++;
+      }
+    });
+    return invalidCount;
+  }
 }
