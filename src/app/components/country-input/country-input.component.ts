@@ -2,6 +2,9 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Country } from '../../shared/enum/country';
 
+// 1. Debounce time was not added for the country input because the data is static and does not require backend calls.
+// 2. There is information about the /api/regions endpoint in the documentation, but it is not implemented in the mock backend.
+// Therefore, the input that uses the Country enum to display the data was created.
 @Component({
   selector: 'app-country-input',
   templateUrl: './country-input.component.html',

@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { Card } from '../../shared/interface/card';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { ControlContainer, FormGroup, NgControl, NgControlStatusGroup, NgForm, NgModel } from '@angular/forms';
+import { Subscription, combineLatest, of } from 'rxjs';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-card',
@@ -8,24 +10,34 @@ import { ControlContainer, NgForm } from '@angular/forms';
   styleUrl: './card.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
-export class CardComponent {
+export class CardComponent implements AfterViewInit, OnDestroy {
   @Input() index!: number;
   @Input() formCard!: Card;
   @Output() removeCard = new EventEmitter<number>();
+  private subscription!: Subscription;
+
+  @ViewChild('country') country!: NgModel;
+  @ViewChild('username') username!: NgModel;
+  @ViewChild('birthday') birthday!: NgModel;
+
+  constructor(private formService: FormService) {}
+
+  ngAfterViewInit(): void {
+    this.subscription = combineLatest(this.country.statusChanges!, this.username.statusChanges!, this.birthday.statusChanges!).subscribe(
+      () => {
+        if(this.country.invalid || this.username.invalid || this.birthday.invalid) {
+          this.formService.addInvalidForm(this.index);
+        } else {
+          this.formService.removeInvalidForm(this.index);
+        }
+      })
+  }
 
   public onRemoveCard(): void {
     this.removeCard.emit();
   }
 
-  //! Move to form service
-  public isErrorShown(prop: 'country' | 'username', index: number): boolean | undefined {
-    // return this.formCardGroups[index].get(prop)?.invalid && (this.formCardGroups[index].get(prop)?.touched || this.isSubmittedForm);
-    return false;
-  }
-
-  //! Move to form service
-  public isPendingShown(index: number): boolean {
-    // return Boolean(this.formCardGroups[index].get('username')?.pending) && (this.formCardGroups[index].get('username')?.touched || this.isSubmittedForm);
-    return false;
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

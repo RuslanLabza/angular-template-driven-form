@@ -1,40 +1,55 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { NgControl } from '@angular/forms';
+import { FormService } from '../services/form.service';
+import { Subscription } from 'rxjs';
 
 @Directive({
   selector: '[appTooltip]'
 })
-export class TooltipDirective {
+export class TooltipDirective implements OnInit, OnDestroy {
   @Input('appTooltip') errorMessage!: string;
+  @Input() tooltipIndex!: number;
 
-  private errorElement!: HTMLElement;
+  private tooltipElement!: HTMLElement;
+  private subscription!: Subscription;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private control: NgControl) {}
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private control: NgControl,
+    private formService: FormService
+  ) {}
 
   ngOnInit(): void {
-    this.errorElement = this.renderer.createElement('span');
-    this.renderer.addClass(this.errorElement, 'invalid-feedback');
-    this.renderer.appendChild(this.el.nativeElement.parentElement, this.errorElement);
-    this.renderer.appendChild(this.errorElement, this.renderer.createText(this.errorMessage));
-
-    this.control.statusChanges!.subscribe(status => {
-      if (this.control.control!.touched || this.control.control!.dirty) {
-        this.updateErrorDisplay(status);
-      }
-    });
-
-    this.control.control!.valueChanges.subscribe(() => {
-      if (this.control.control!.touched || this.control.control!.dirty) {
-        this.updateErrorDisplay(this.control.status!);
-      }
-    });
+    this.tooltipElement = this.renderer.createElement('span');
+    this.renderer.addClass(this.tooltipElement, 'invalid-feedback');
+    this.renderer.appendChild(this.isCustomElement() ? this.el.nativeElement : this.el.nativeElement.parentElement, this.tooltipElement);
+    this.renderer.appendChild(this.tooltipElement, this.renderer.createText(this.errorMessage));
+    this.subscription = this.formService.submitted$.subscribe(submitted => this.showTooltip(this.control.control!.invalid && submitted));
   }
 
-  private updateErrorDisplay(status: string): void {
-    if (status === 'INVALID' && this.control.control!.errors) {
-      this.renderer.setStyle(this.errorElement, 'display', 'block');
+  @HostListener('input')
+  @HostListener('blur')
+  @HostListener('ngModelChange')
+  onEvent() {
+    this.showTooltip(this.control.control!.invalid && (this.control.control!.touched || this.control.control!.dirty));
+  }
+
+  private showTooltip(isShown: boolean): void {
+    if (isShown) {
+      this.renderer.setStyle(this.tooltipElement, 'display', 'block');
+      // this.formService.addInvalidForm(this.tooltipIndex);
     } else {
-      this.renderer.setStyle(this.errorElement, 'display', 'none');
+      this.renderer.setStyle(this.tooltipElement, 'display', 'none');
+      // this.formService.removeInvalidForm(this.tooltipIndex);
     }
+  }
+
+  private isCustomElement(): boolean {
+    return this.el.nativeElement.tagName.toLowerCase().includes('app');
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

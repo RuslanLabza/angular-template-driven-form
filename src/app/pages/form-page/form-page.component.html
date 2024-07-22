@@ -1,14 +1,14 @@
 <form (ngSubmit)="onSubmit()" #f="ngForm">
   <div class="d-flex">
-    <button type="submit" class="btn btn-primary mb-2">Submit all forms</button>
-    <!-- <p *ngIf="pageForm.invalid && countInvalidControls(pageForm) && (pageForm.touched || this.isSubmittedForm)" class="invalid-feedback d-block">Invalid forms: {{countInvalidControls(pageForm)}}</p> -->
+    <button type="submit" [disabled]="f.invalid || f.pending" class="btn btn-primary mb-2">Submit all forms</button>
+    <p *ngIf="(this.invalidForms$ | async)!.size" class="invalid-feedback d-block">Invalid forms: {{(this.invalidForms$ | async)!.size}}</p>
   </div>
   <div formArrayName="cards" class="d-flex flex-wrap gap-1">
     <app-card
-      *ngFor="let formCard of formCards; let i = index"
+      *ngFor="let formCard of formCards"
       [formCard]="formCard"
-      [index]="i"
-      (removeCard)="onRemoveCard(i)"
+      [index]="formCard.index"
+      (removeCard)="onRemoveCard(formCard.index)"
     ></app-card>
     <app-add-new-card-button (addCard)="onAddCard()"></app-add-new-card-button>
   </div>

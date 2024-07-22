@@ -4,7 +4,7 @@ According to Angular guidelines, validators are typically used as functions in t
 Conversely, using directives for validators aligns better with the TD approach.
 2. The form is relatively small, making both the TD and Reactive approaches viable options. -->
 
-<div class="card p-3" [ngModelGroup]="''+index">
+<div class="card p-3" [ngModelGroup]="index.toString()">
   <button type="button" class="btn btn-default btn-remove" (click)="onRemoveCard()">X</button>
 
   <app-country-input
@@ -14,7 +14,10 @@ Conversely, using directives for validators aligns better with the TD approach.
     name="country"
     required
     appIsCountryValid
-    [appTooltip]="'Please provide a correct Country'"></app-country-input>
+    [appTooltip]="'Please provide a correct Country'"
+    [tooltipIndex]="index"
+    #country="ngModel"
+  ></app-country-input>
 
   <!-- Separate components were not created for the username and birthday inputs since there is no additional logic for these inputs in card.component.ts. -->
   <div class="form-group mb-2">
@@ -24,12 +27,14 @@ Conversely, using directives for validators aligns better with the TD approach.
       class="form-control"
       [id]="'username-' + index"
       placeholder="Username"
-      [disabled]="isPendingShown(index)"
       name="username"
       [(ngModel)]="formCard.username"
       required
       appIsUsernameAvailable
-      [appTooltip]="'Please provide a correct Username'">
+      [appTooltip]="'Please provide a correct Username'"
+      [tooltipIndex]="index"
+      #username="ngModel"
+    >
   </div>
 
   <div class="form-group">
@@ -42,6 +47,10 @@ Conversely, using directives for validators aligns better with the TD approach.
       name="birthday"
       [(ngModel)]="formCard.birthday"
       required
-      >
+      appIsBirthdayValid
+      [appTooltip]="'Please provide a correct Birthday'"
+      [tooltipIndex]="index"
+      #birthday="ngModel"
+    >
   </div>
 </div>

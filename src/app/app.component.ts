@@ -1,6 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Card } from './shared/interface/card';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',

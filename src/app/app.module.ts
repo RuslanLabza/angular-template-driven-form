@@ -13,6 +13,7 @@ import { IsCountryValidDirective } from './directives/is-country-valid.directive
 import { IsUsernameAvailableDirective } from './directives/is-username-available.directive';
 import { FormPageComponent } from './pages/form-page/form-page.component';
 import { TooltipDirective } from './directives/tooltip.directive';
+import { IsBirthdayValidDirective } from './directives/is-birthday-valid.directive';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TooltipDirective } from './directives/tooltip.directive';
     CountryInputComponent,
     IsCountryValidDirective,
     IsUsernameAvailableDirective,
-    TooltipDirective
+    TooltipDirective,
+    IsBirthdayValidDirective
   ],
   imports: [
     BrowserModule,
