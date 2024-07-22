@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, OnInit, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Country } from '../../shared/enum/country';
 import { TextConstants } from '../../shared/constants';
@@ -13,7 +13,7 @@ import { TextConstants } from '../../shared/constants';
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CountryInputComponent), multi: true },
   ]
 })
-export class CountryInputComponent implements ControlValueAccessor {
+export class CountryInputComponent implements ControlValueAccessor, OnInit {
   @Input() index!: number;
 
   private suggestions = Object.values(Country);

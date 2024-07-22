@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Card } from '../../shared/interface/card';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
-import { Observable, Subscription, combineLatest, of } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { FormService } from '../../services/form.service';
 import { TextConstants } from '../../shared/constants';
 

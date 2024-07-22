@@ -27,7 +27,7 @@ export class FormService {
   }
 
   removeInvalidForm(index: number): void {
-    let invalidForms = this.invalidFormsSubject.value;
+    const invalidForms = this.invalidFormsSubject.value;
     invalidForms.delete(index);
     this.invalidFormsSubject.next(invalidForms);
   }
