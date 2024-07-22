@@ -1,0 +1,47 @@
+<!-- The Template-driven approach for the form was chosen for two reasons:
+1. The task specifies: "Create a directive for input validation." This implies that the Template-driven (TD) approach is more suitable.
+According to Angular guidelines, validators are typically used as functions in the model for the Reactive approach.
+Conversely, using directives for validators aligns better with the TD approach.
+2. The form is relatively small, making both the TD and Reactive approaches viable options. -->
+
+<div class="card p-3" [ngModelGroup]="''+index">
+  <button type="button" class="btn btn-default btn-remove" (click)="onRemoveCard()">X</button>
+
+  <app-country-input
+    class="mb-2"
+    [index]="index"
+    [(ngModel)]="formCard.country"
+    name="country"
+    required
+    appIsCountryValid
+    [appTooltip]="'Please provide a correct Country'"></app-country-input>
+
+  <!-- Separate components were not created for the username and birthday inputs since there is no additional logic for these inputs in card.component.ts. -->
+  <div class="form-group mb-2">
+    <label [for]="'username-' + index">Username</label>
+    <input
+      type="text"
+      class="form-control"
+      [id]="'username-' + index"
+      placeholder="Username"
+      [disabled]="isPendingShown(index)"
+      name="username"
+      [(ngModel)]="formCard.username"
+      required
+      appIsUsernameAvailable
+      [appTooltip]="'Please provide a correct Username'">
+  </div>
+
+  <div class="form-group">
+    <label [for]="'birthday-' + index">Birthday</label>
+    <input
+      type="date"
+      class="form-control"
+      [id]="'birthday-' + index"
+      placeholder="Birthday"
+      name="birthday"
+      [(ngModel)]="formCard.birthday"
+      required
+      >
+  </div>
+</div>
