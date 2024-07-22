@@ -1,6 +1,7 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Country } from '../../shared/enum/country';
+import { TextConstants } from '../../shared/constants';
 
 // 1. Debounce time was not added for the country input because the data is static and does not require backend calls.
 // 2. There is information about the /api/regions endpoint in the documentation, but it is not implemented in the mock backend.
@@ -20,6 +21,7 @@ export class CountryInputComponent implements ControlValueAccessor {
   filteredSuggestions: Partial<Country>[] = [];
   showSuggestions: boolean = false;
   isDisabled: boolean = false;
+  textConstants = TextConstants;
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};

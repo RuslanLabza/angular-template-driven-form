@@ -1,17 +1,15 @@
-import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { FormService } from '../services/form.service';
-import { Subscription } from 'rxjs';
 
 @Directive({
   selector: '[appTooltip]'
 })
-export class TooltipDirective implements OnInit, OnDestroy {
+export class TooltipDirective implements OnInit {
   @Input('appTooltip') errorMessage!: string;
   @Input() tooltipIndex!: number;
 
   private tooltipElement!: HTMLElement;
-  private subscription!: Subscription;
 
   constructor(
     private el: ElementRef,
@@ -25,7 +23,6 @@ export class TooltipDirective implements OnInit, OnDestroy {
     this.renderer.addClass(this.tooltipElement, 'invalid-feedback');
     this.renderer.appendChild(this.isCustomElement() ? this.el.nativeElement : this.el.nativeElement.parentElement, this.tooltipElement);
     this.renderer.appendChild(this.tooltipElement, this.renderer.createText(this.errorMessage));
-    this.subscription = this.formService.submitted$.subscribe(submitted => this.showTooltip(this.control.control!.invalid && submitted));
   }
 
   @HostListener('input')
@@ -38,18 +35,12 @@ export class TooltipDirective implements OnInit, OnDestroy {
   private showTooltip(isShown: boolean): void {
     if (isShown) {
       this.renderer.setStyle(this.tooltipElement, 'display', 'block');
-      // this.formService.addInvalidForm(this.tooltipIndex);
     } else {
       this.renderer.setStyle(this.tooltipElement, 'display', 'none');
-      // this.formService.removeInvalidForm(this.tooltipIndex);
     }
   }
 
   private isCustomElement(): boolean {
     return this.el.nativeElement.tagName.toLowerCase().includes('app');
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }

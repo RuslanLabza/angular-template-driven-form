@@ -1,16 +1,16 @@
 <div class="form-group position-relative">
-  <label [for]="'country-' + index">Country</label>
+  <label [for]="textConstants.LABELS.COUNTRY + '-' + index">{{textConstants.LABELS.COUNTRY}}</label>
   <input
     type="text"
     class="form-control"
-    [id]="'country-' + index"
+    [id]="textConstants.LABELS.COUNTRY + '-' + index"
     [value]="value"
     (input)="onInput($event)"
     (blur)="onBlur()"
     (focus)="onFocus()"
     autocomplete="off"
     [disabled]="isDisabled"
-    placeholder="Country">
+    [placeholder]="textConstants.LABELS.COUNTRY">
 
   <ul *ngIf="showSuggestions && filteredSuggestions.length > 0" class="list-group position-absolute w-100">
     <li *ngFor="let suggestion of filteredSuggestions"

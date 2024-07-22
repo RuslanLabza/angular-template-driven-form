@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { CheckUserResponseData, SubmitFormResponseData } from '../shared/interface/responses';
+import { Card } from '../shared/interface/card';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  checkUsernameUrl = '/api/checkUsername';
+  private checkUsernameUrl = environment.checkUsername;
+  private submitFormUrl = environment.submitForm;
+
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +19,7 @@ export class UserService {
     return this.http.post<CheckUserResponseData>(this.checkUsernameUrl, {username});
   }
 
-  submitForm(formData: Object): Observable<HttpResponse<SubmitFormResponseData>> {
-    return of({ status: 200, body: { result: 'nice job' } } as any)
+  submitForm(formData: {[index: number]: Card}): Observable<SubmitFormResponseData> {
+    return this.http.post<SubmitFormResponseData>(this.submitFormUrl, {formData});
   }
 }

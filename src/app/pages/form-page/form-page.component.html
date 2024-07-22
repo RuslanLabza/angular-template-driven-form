@@ -1,7 +1,8 @@
 <form (ngSubmit)="onSubmit()" #f="ngForm">
   <div class="d-flex">
-    <button type="submit" [disabled]="f.invalid || f.pending" class="btn btn-primary mb-2">Submit all forms</button>
-    <p *ngIf="(this.invalidForms$ | async)!.size" class="invalid-feedback d-block">Invalid forms: {{(this.invalidForms$ | async)!.size}}</p>
+    <button type="submit" [disabled]="f.invalid || f.pending" class="btn btn-primary mb-2">{{ submitButtonText }}</button>
+    <p *ngIf="(this.invalidForms$ | async)!.size" class="invalid-feedback d-block">{{textConstants.LABELS.INVALID_FORMS + ' ' + (this.invalidForms$ | async)!.size}}</p>
+    <p *ngIf="timer > 0" class="text-danger">{{ timer + ' ' + textConstants.LABELS.TIMER_REMAINING }}</p>
   </div>
   <div formArrayName="cards" class="d-flex flex-wrap gap-1">
     <app-card
