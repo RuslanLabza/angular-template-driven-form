@@ -1,0 +1,59 @@
+<!-- The Template-driven approach for the form was chosen for two reasons:
+1. The task specifies: "Create a directive for input validation." This implies that the Template-driven (TD) approach is more suitable.
+According to Angular guidelines, validators are typically used as functions in the model for the Reactive approach.
+Conversely, using directives for validators aligns better with the TD approach.
+2. The form is relatively small, making both the TD and Reactive approaches viable options. -->
+
+<div class="card p-3" [ngModelGroup]="index.toString()">
+  <button type="button" class="btn btn-default btn-remove" (click)="onRemoveCard()" [disabled]="this.disabled$ | async">{{textConstants.BUTTONS.REMOVE}}</button>
+
+  <app-country-input
+    class="mb-2"
+    [index]="index"
+    [(ngModel)]="formCard.country"
+    [disabled]="!!(this.disabled$ | async)"
+    [name]="textConstants.LABELS.COUNTRY"
+    required
+    appIsCountryValid
+    [appTooltip]="textConstants.MESSAGES.INVALID_COUNTRY"
+    [tooltipIndex]="index"
+    #country="ngModel"
+  ></app-country-input>
+
+  <!-- Separate components were not created for the username and birthday inputs since there is no additional logic for these inputs in card.component.ts. -->
+  <div class="form-group mb-2">
+    <label [for]="textConstants.LABELS.USERNAME + '-' + index">{{textConstants.LABELS.USERNAME}}</label>
+    <input
+      type="text"
+      class="form-control"
+      [id]="textConstants.LABELS.USERNAME + '-' + index"
+      [disabled]="!!(this.disabled$ | async)"
+      [placeholder]="textConstants.LABELS.USERNAME"
+      [name]="textConstants.LABELS.USERNAME"
+      [(ngModel)]="formCard.username"
+      required
+      appIsUsernameAvailable
+      [appTooltip]="textConstants.MESSAGES.INVALID_USERNAME"
+      [tooltipIndex]="index"
+      #username="ngModel"
+    >
+  </div>
+
+  <div class="form-group">
+    <label [for]="textConstants.LABELS.BIRTHDAY + '-' + index">{{textConstants.LABELS.BIRTHDAY}}</label>
+    <input
+      type="date"
+      class="form-control"
+      [id]="textConstants.LABELS.BIRTHDAY + '-' + index"
+      [disabled]="!!(this.disabled$ | async)"
+      [placeholder]="textConstants.LABELS.BIRTHDAY"
+      [name]="textConstants.LABELS.BIRTHDAY"
+      [(ngModel)]="formCard.birthday"
+      required
+      appIsBirthdayValid
+      [appTooltip]="textConstants.MESSAGES.INVALID_BIRTHDAY"
+      [tooltipIndex]="index"
+      #birthday="ngModel"
+    >
+  </div>
+</div>
