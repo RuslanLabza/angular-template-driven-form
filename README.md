@@ -2,6 +2,15 @@
 
 This project is an Angular-based task management application that demonstrates various Angular features and best practices.
 
+## Table of Contents
+- [Features](#features)
+- [Angular Specifics](#angular-specifics)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Angular Specifics
 
@@ -13,15 +22,6 @@ This project is an Angular-based task management application that demonstrates v
 - **Lazy Loading**: Implemented for optimized module loading.
 - **Guards**: Route guards used for protecting authenticated routes.
 - **Interceptors**: HTTP interceptors for adding authentication tokens to requests.
-
-## Table of Contents
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
