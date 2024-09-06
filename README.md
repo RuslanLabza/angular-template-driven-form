@@ -9,45 +9,19 @@ This project is an Angular-based task management application that demonstrates v
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
-- [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
 
 ## Angular Specifics
 
-- **[Components](src/app/components/)**: Reusable UI elements with their own logic and styling.
-  - [Task List Component](src/app/components/task-list/task-list.component.ts)
-  - [Task Form Component](src/app/components/task-form/task-form.component.ts)
-
-- **[Services](src/app/services/)**: Singleton objects for sharing data and functionality.
-  - [Task Service](src/app/services/task.service.ts)
-  - [Auth Service](src/app/services/auth.service.ts)
-
-- **[Directives](src/app/directives/)**: Custom attributes and elements that extend HTML.
-  - [Task Status Directive](src/app/directives/task-status.directive.ts)
-
-- **[Pipes](src/app/pipes/)**: Functions to transform display values in templates.
-  - [Task Filter Pipe](src/app/pipes/task-filter.pipe.ts)
-
-- **[Guards](src/app/guards/)**: Route guards for protecting authenticated routes.
-  - [Auth Guard](src/app/guards/auth.guard.ts)
-
-- **[Interceptors](src/app/interceptors/)**: HTTP request/response handlers.
-  - [Auth Interceptor](src/app/interceptors/auth.interceptor.ts)
-
-- **[Models](src/app/models/)**: TypeScript interfaces for type checking.
-  - [Task Model](src/app/models/task.model.ts)
-
-- **[Routing](src/app/app-routing.module.ts)**: Navigation configuration for the application.
-
-- **[Main Module](src/app/app.module.ts)**: The root module that tells Angular how to assemble the application.
-
-- **Template-Driven Forms**: Used for task input and editing, showcasing two-way data binding and form validation. See [task-form.component.html](src/app/components/task-form/task-form.component.html).
-
-- **Angular Material**: Utilized for consistent and responsive UI components. Configuration in [app.module.ts](src/app/app.module.ts).
-
-- **Lazy Loading**: Implemented for optimized module loading. Configuration in [app-routing.module.ts](src/app/app-routing.module.ts).
+- **Template-Driven Forms**: Used for task input and editing, showcasing two-way data binding and form validation.
+- **Angular Material**: Utilized for consistent and responsive UI components.
+- **Services**: Implemented for task data management and API communication.
+- **Directives**: Custom directives created for task status visualization.
+- **Pipes**: Custom pipes used for data transformation in task list views.
+- **Lazy Loading**: Implemented for optimized module loading.
+- **Guards**: Route guards used for protecting authenticated routes.
+- **Interceptors**: HTTP interceptors for adding authentication tokens to requests.
 
 ## Features
 
@@ -100,47 +74,6 @@ To run the tests:
    ng test
    ```
 
-## Project Structure
-
-angular-task-management/
-├── src/
-│ ├── app/
-│ │ ├── components/
-│ │ │ ├── task-list/
-│ │ │ │ ├── task-list.component.ts
-│ │ │ │ ├── task-list.component.html
-│ │ │ │ └── task-list.component.scss
-│ │ │ ├── task-form/
-│ │ │ │ ├── task-form.component.ts
-│ │ │ │ ├── task-form.component.html
-│ │ │ │ └── task-form.component.scss
-│ │ │ └── ...
-│ │ ├── services/
-│ │ │ ├── task.service.ts
-│ │ │ └── auth.service.ts
-│ │ ├── directives/
-│ │ │ └── task-status.directive.ts
-│ │ ├── pipes/
-│ │ │ └── task-filter.pipe.ts
-│ │ ├── guards/
-│ │ │ └── auth.guard.ts
-│ │ ├── interceptors/
-│ │ │ └── auth.interceptor.ts
-│ │ ├── models/
-│ │ │ └── task.model.ts
-│ │ ├── app.component.ts
-│ │ ├── app.component.html
-│ │ ├── app.component.scss
-│ │ └── app.module.ts
-│ ├── assets/
-│ ├── environments/
-│ ├── index.html
-│ └── main.ts
-├── angular.json
-├── package.json
-├── tsconfig.json
-└── README.md
-
 ## Contributing
 
 1. Fork the repository
@@ -158,4 +91,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 Ruslan Labza - [LinkedIn](https://www.linkedin.com/in/ruslanlabza)
 
-Project Link: [https://github.com/RuslanLabza/react-meta-capstone-project](https://github.com/RuslanLabza/react-meta-capstone-project)
+Project Link: [https://github.com/RuslanLabza/angular-template-driven-form](https://github.com/RuslanLabza/angular-template-driven-form)
