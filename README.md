@@ -3,8 +3,8 @@
 This project is an Angular-based task management application that demonstrates various Angular features and best practices.
 
 ## Table of Contents
-- [Features](#features)
 - [Angular Specifics](#angular-specifics)
+- [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
